@@ -30,15 +30,74 @@
 
 ## ⚙️ 기능 상세 설명
 
-### ✅ 메뉴 & 헤더 상호작용
-- 모바일에서 `.menu-open` 클래스로 메뉴 열림/닫힘 제어
-- GNB는 모바일에서 하나만 열리도록 설정
+### ✅ 데스크탑 - header 상호작용
 - 데스크탑에서는 호버 시 `header.on` 클래스 부여 및 높이 애니메이션 적용
-![image](https://example.com/image.png)
+ <img src="images/ss1.jpg">
+
+ ``` JavaScript
+Array.from(gnbList).forEach(function(item1, i){
+		item1.addEventListener("click", function(e){
+			e.preventDefault();
+
+			if(desktopFlag) return;
+
+			if(item1.classList.contains("no-depth")) return;
+
+			if(!item1.classList.contains("open")){
+				Array.from(gnbList).forEach(function(item2, j){
+					if(j == i){
+						item2.classList.add("open");
+					}
+					else{
+						item2.classList.remove("open");
+					}
+				});
+			}
+			else{
+				item1.classList.remove("open");
+			}
+		});
+
+		item1.addEventListener("mouseenter", function(){
+			if(!desktopFlag) return;
+
+			header.classList.add("on");
+			header.style.height="300px";
+		});
+
+		item1.addEventListener("mouseleave", function(){
+			if(!desktopFlag) return;
+
+			header.classList.remove("on");
+			header.removeAttribute("style");
+		});
+	});
+
+export default App;
+```
+
+### ✅ 모바일 - header 상호작용
+- 모바일에서 `.menu-open` 클래스로 메뉴 열림/닫힘 제어
+- GNB는 모바일에서 하나만 열리도록 설정 <br/>
+  <img src="images/ss2.jpg" width="300px">
+```
+	menuTab.addEventListener("click", function(e){
+		e.preventDefault();
+
+		header.classList.toggle("menu-open");
+	});
+
+	dimmed.addEventListener("click", function(){
+		header.classList.remove("menu-open");
+	});
+```
 
 ### ✅ Swiper 슬라이더
 - **메인 슬라이더**: 페이드 효과, 자동 재생
+  <img src="images/ss3.jpg">
+
 - **상품 슬라이더**: 중앙 정렬, 브레이크포인트 대응
+    <img src="images/ss4.jpg">
 
 ### ✅ GSAP 애니메이션
 - `.main-typo`: 좌우로 자연스러운 스크롤 이동
